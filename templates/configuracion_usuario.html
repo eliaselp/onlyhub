@@ -1,0 +1,149 @@
+{% extends "panel.html" %}
+{% load static %}
+{% block contenido %}
+<div class="contenedor_principal rounded-2" >
+    <div class='w-100 d-flex h-100'>
+        <div class='w-50 d-flex flex-col justify-content-start align-items-center gap-5'>
+            <div class="imagen-configuracion">
+                {% if  url_foto_perfil %}
+                    <img src="{{ url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">
+                {% else %}
+                    <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                {% endif %}
+                
+                <p class="text-4xl text-white text-center">{{usuario.username}}</p>
+            </div>
+            
+            <div class='w-100 d-flex flex-col justify-content-center gap-4 align-items-center'>
+                <div class="w-100 d-flex flex-col justify-content-center gap-4 align-items-center">
+                    <input type="hidden" name="opc" value="">
+                    <a class="btn btn-primary rounded-5 w-50" data-bs-toggle="modal" data-bs-target="#config-cambiar-foto-perfil">
+                        Actualizar Foto de Perfil
+                    </a>
+                    <a class="btn btn-primary rounded-5 w-50" data-bs-toggle="modal" data-bs-target="#config-cambiar-clave">
+                        Cambiar Contraseña
+                    </a>
+                    
+                    <a class="btn btn-danger rounded-5 w-50" data-bs-toggle="modal" data-bs-target="#config-eliminar-cuenta">
+                        Eliminar Cuenta
+                    </a>
+                </div>
+            </div>
+
+            <div class="modal fade" id="config-cambiar-foto-perfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+                    <div class="modal-content modal-info-contacto">
+                        <div class="modal-header d-flex gap-4">
+                            <div  class='d-flex flex-column align-items-center '>
+                                <p class='text-white fw-bold fs-3 verdana text-center'>Actualizar foto de perfil</p>
+                            </div>
+                        </div>
+                        <div class="modal-body text-white ">
+                            <form action="" method="POST" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label fs-5">Suba una foto de perfil</label>
+                                    <input type="file" class="form-control bg-dark text-white" name="imagen" accept="image/*" id="formFile" required>
+                                </div>
+                                <input type="hidden" name="opc" value="config-cambiar-foto-perfil">
+                                <div class="modal-footer mt-4">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary" id="config-guardar-cambio-clave">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="config-cambiar-clave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+                    <div class="modal-content modal-info-contacto">
+                        <div class="modal-header d-flex gap-4">
+                            <div  class='d-flex flex-column align-items-center '>
+                                <p class='text-white fw-bold fs-3 verdana text-center'>Cambio de contraseña</p>
+                            </div>
+                        </div>
+                        <div class="modal-body text-white ">
+                            <div class='d-flex flex-column gap-2'>
+                                <form action="" method="POST" id="config-form-cambiar-clave">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="opc" value="config-cambiar-clave">
+                                    <div class=" d-flex flex-col gap-5">
+                                        <div class="d-flex justify-center">
+                                            <label class='verdana fw-light'>Contraseña Actual</label>
+                                            <input type='password'  name="password-actual" class='form-control d-inline w-100'>
+                                        </div>
+
+                                        <div class="d-flex justify-center">
+                                            <label class='verdana fw-light'>Contraseña Nueva</label>
+                                            <input type='password'  name="password1" class='form-control d-inline w-100'>
+                                        </div>
+
+                                        <div class="d-flex justify-center">
+                                            <label class='verdana fw-light'>Repetir Contraseña</label>
+                                            <input type='password'  name="password2" class='form-control d-inline w-100'>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer mt-3">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary" id="config-guardar-cambio-clave">Guardar</button>
+                                    </div>            
+                                </form>                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="config-eliminar-cuenta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+                    <div class="modal-content modal-info-contacto">
+                        <div class="modal-header d-flex gap-4">
+                            <div  class='d-flex flex-column align-items-center '>
+                                <p class='text-white fw-bold fs-3 verdana'>Confirmacion de eliminacion de cuenta</p>
+                            </div>
+                        </div>
+                        <p class='verdana fw-light text-white my-5 px-5'>Si elimina la cuenta no podra podra recuperarla. Sus datos personales seran eliminados permanentemente.</p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="" method="POST" >
+                                {% csrf_token %}
+                                <input type="hidden" name="opc" value="config-eliminar-cuenta">
+                                <input type="submit" class="btn btn-danger" id="config-eliminar-cuenta" value="Eliminar Cuenta">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='w-50 d-flex flex-column align-items-center p-3'>
+            <div class='d-flex flex-column gap-3 form-control overflow-y-auto'
+                style="background-color:#212529; color:white"
+            >
+                <p class="text-center text-2xl">Configuracion</p>
+                
+                <form action="" method="POST" class="">
+                    {% csrf_token %}
+                    <input type="hidden" name="opc" value="config-info">
+                    <input type='text' placeholder="Nombres" value='{{usuario.Nombres}}' name="input-nombre" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="Apellidos" value='{{usuario.Apellidos}}' name="input-apellido" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="Telefono" value='{{usuario.Telefono}}' name="input-telefono" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="Pais" value='{{usuario.Pais}}' name="input-pais" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="Ciudad" value='{{usuario.Ciudad}}' name="input-ciudad" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="Info" value='{{usuario.Info}}' name="input-info" class='form-control d-inline w-100 mt-2'>
+                    <input type='date' placeholder="Fecha de Nacimiento" name="input-fecha-nacimiento" class='form-control d-inline w-100 mt-2'>
+                    <input type='text' placeholder="username" value='{{usuario.username}}' name="input-username" class='form-control d-inline w-100 mt-2'>
+                    <input type="submit" value="Guardar" class="btn btn-success mt-3 w-100">
+                </form>
+
+            </div>
+        </div>    
+
+
+    </div>
+</div>
+{% endblock  %}

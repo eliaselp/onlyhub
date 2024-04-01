@@ -1,0 +1,297 @@
+{% extends "panel.html" %}
+{% load static %}
+{% block contenido %}
+    <!--contenedor general -->
+    <div class="contenedor_principal rounded-2 " >
+        
+        <!--Primer contenedor del general -->
+        <div class='p-2 d-flex justify-content-between rounded-1 info'>
+            <div class='d-flex gap-3 align-items-center'>
+                <div class="imagen-contacto">
+                    {% if quien.url_foto_perfil %}
+                        <img src="{{ quien.url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">    
+                    {% else %}
+                        <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                    {% endif %}
+                </div>
+                <p class='fs-5 text-white nombre-contacto text-capitalize'>{{quien.username}}</p>
+            </div>
+
+            <div class='d-flex justify-content-between align-items-center gap-3'>
+                {% if quien in contactos %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="opc" value="eliminar-contacto">
+                        <input type="hidden" name="quien" value="{{quien.username}}">
+                        <input type="submit" class="btn btn-success rounded-5" value="Eliminar">
+                    </form>
+                {% else %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="opc" value="agregar-contacto">
+                        <input type="hidden" name="quien" value="{{quien.username}}">
+                        <input type="submit" class="btn btn-success rounded-5" value="Agregar">
+                    </form>
+                {% endif %}
+                    
+                <a class="btn btn-primary outline_info rounded-5" data-bs-toggle="modal" data-bs-target="#usuarioID" id='info'>
+                    Info
+                </a>
+                  
+                <!-- Modal de info -->
+                <div class="modal fade" id="usuarioID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered">
+                        <div class="modal-content modal-info-contacto">
+                            <div class="modal-header d-flex gap-4">
+                                <div class="imagen-info text-center ">
+                                    {% if quien.url_foto_perfil %}
+                                        <img src="{{ quien.url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">    
+                                    {% else %}
+                                        <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                                    {% endif %}
+                                </div>
+                                <div  class='d-flex flex-column align-items-center '>
+                                    <p class='text-white fw-bold fs-3 verdana text-capitalize'>{{quien.username}}</p>
+                                    {% if quien.Telefono %}<p class='fw-bold verdana numero'>{{quien.Telefono}}</p>{% endif %}
+                                </div>
+                            </div>
+                            <div class="modal-body text-white ">
+                                <div class='d-flex flex-column gap-2'>
+                                    <span class='d-flex gap-2 align-items-center '>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                        </svg>
+                                        <h3 class='verdana text-capitalize fw-light '>info :{% if quien.Info %}<span class='verdana fw-light '>{{quien.Info}}</span>{% endif %}</h3>
+                                    </span>
+                                    
+                                    {% if quien %}      
+                                        {% if quien.Nombres %}<p class='verdana fw-light '>Nombre: {{quien.Nombres}}</p>{% endif %}
+                                        {% if quien.Apellidos %}<p class='verdana fw-light '>Apellido: {{quien.Apellidos}}</p>{% endif %}
+                                        {% if quien.Pais %}<p class='verdana fw-light '>Pais: {{quien.Pais}}</p>{% endif %}
+                                        {% if quien.Ciudad %}<p class='verdana fw-light '>Ciudad: {{quien.Ciudad}}</p>{% endif %}
+                                        {% if quien.Fecha_Nacimiento %}<p class='verdana fw-light '>Fecha de Nacimiento: {{quien.Fecha_Nacimiento}}</p>{% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<button type="button" class="form-control rounded-5 outline_chat"  id='chatear'>Chat</button>
+                <a class='form-control rounded-5 outline_chat' id='block'>Block</a>-->
+            </div>
+        </div>
+        <!--Fin del Primer contenedor del general -->
+
+        <!--Segundo contenedor del general -->
+        <div class='d-block h-100 w-100 ' id='publicaciones'>
+
+            <!--contenedor de publicaciones-->
+            <div class='text-white justify-content-between w-100 1 align-items-center gap-3 d-flex h-100 w-75'>
+                <div class='d-flex container_public h-100 w-100 align-items-center '>
+                    <div id="carouselExampleFade" class="slide carousel-fade h-100 d-flex align-items-center ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-caret-left-fill svg-overflow" viewBox="0 0 16 16" id='svg-izquierda'>
+                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                        </svg>
+                        <div class="carousel-inner h-100 d-flex align-items-center">
+                            <div class="carousel-item active d-flex  h-100 d-flex align-items-center px-4 py-4 gap-4" id='container_public'>
+                                {% if publicaciones %}
+                                    {% for pb in publicaciones %}
+                                        <img src="{{pb.p.url_imagen}}" class="img-fluid mx-1 fixed-img {%if pb.like_mio %}liekada{% endif %}" alt="imagen" id='poster' data-bs-toggle="modal" data-bs-target="#{{pb.p.token}}" id='info'>                                    
+                                    {% endfor %}
+                                {% else %}
+                                    <h3 class="h3 text-white">No hay ninguna publicación</h3>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% if publicaciones %}
+                                    {% for pb in publicaciones %}
+                                        <div class="modal fade" id="{{pb.p.token}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content modal-info-contacto">
+                                                    {% if pb.p.texto %}
+                                                        <div class="modal-header">
+                                                            <span class='d-flex gap-2 align-items-center '>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                                                </svg>
+                                                                <h3 class='verdana text-capitalize fw-light h4'><span class='verdana fw-light h5'>{{pb.p.texto}}</span></h3>
+                                                            </span>                                                    
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="modal-body">
+                                                        <img src="{{pb.p.url_imagen}}" class="mx-1">                                                
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-between">
+                                                        {%if pb.like_mio %}
+                                                            <form action="" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="opc" value="dislike_personal">
+                                                                <input type="hidden" name="token" value="{{pb.p.token}}">
+                                                                <button type="submit">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-star-fill dislike" viewBox="0 0 16 16">
+                                                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        {% else %}
+                                                            <form action="" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="opc" value="like_personal">
+                                                                <input type="hidden" name="token" value="{{pb.p.token}}">
+                                                                <button type="submit">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-star like" viewBox="0 0 16 16">
+                                                                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        {% endif %}
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-caret-right-fill svg-overflow" viewBox="0 0 16 16" id='svg-derecha'>
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!--Fin del contenedor de publicaciones -->
+        </div>
+         
+        <!--Fin del Segundo contenedor del general -->
+
+        <!--Tercer contenedor del general -->
+        <div class='bg-transparent d-none' id='chats'> 
+            <div id='container_chat' class='container_chat '>
+                <div class='d-flex flex-column justify-content-end fondo-chat'>
+                        <div class='d-flex  justify-content-between d-flex flex-column p-2 contenedor_mensajes '>
+                            
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    Papa estamos probando el front de la app
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    y q tal ? 
+                                </p>
+                            </div>
+                            
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                Man solo t puedo decir q andamos durisimos covio
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2'>
+                                    bafff
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end'>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    mandame la foto a ver como queda
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    dame un time q ando lejos
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    no hay craneo dale
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    nos vemos mas tarde
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    ok
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    Papa estamos probando el front de la app
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    y q tal ? 
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                Man solo t puedo decir q andamos durisimos covio
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2'>
+                                    bafff
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end'>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    mandame la foto a ver como queda
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    dame un time q ando lejos
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    no hay craneo dale
+                                </p>
+                            </div>
+                            <div class='px-4 d-flex'>
+                                <p class='text-center chat-cont-recibido mb-2 '>
+                                    nos vemos mas tarde
+                                </p>
+                            </div>
+                        
+                            <div class='px-4 d-flex justify-content-end '>
+                                <p class='text-end chat-cont-enviado mb-2 '>
+                                    ok
+                                </p>
+                            </div>
+                        </div>
+                        <form class=' w-100 d-flex justify-content-center align-items-center gap-2 px-5 py-3 fondo-enviar gap-3' id='mensaje'>
+                            <input type='text' class='form-control' placeholder='Escriba un mensaje aquí'>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="svg" viewBox="0 0 16 16" id='send'>
+                                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                                </svg>
+                            </span>
+                        </form>
+                </div>
+            </div>
+        </div>
+            
+        <!--Fin del Tercer contenedor del general -->
+
+
+    </div>
+
+{% endblock %}

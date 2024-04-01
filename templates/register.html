@@ -1,0 +1,74 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block meta %}
+    <title>LinkWolf - Register</title>
+{% endblock %}
+
+{% block contenido %}
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-md w-full sm:w-96">
+            <img src="{% static './img/logo2.png' %}" class="h-40 rounded-xl mx-auto"/>
+            <h1 class="text-2xl font-bold text-center mb-4">Registro</h1>
+            <form action="" method="POST">
+                {% csrf_token %}        
+                <div class="mb-4">
+                    <label for="username" class="text-xl font-medium text-gray-700">Nombre de usuario</label>
+                    <input 
+                        for="bt-register" 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md 
+                        focus:outline-none focus:ring focus:ring-gray-300 bg-gray-200"
+                        required
+                    >
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="text-xl font-medium text-gray-700">Correo electrónico (Gmail)</label>
+                    <input
+                        for="bt-register" 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md 
+                        focus:outline-none focus:ring focus:ring-gray-300 bg-gray-200" 
+                        required
+                    >
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="text-xl font-medium text-gray-700">Contraseña</label>
+                    <input 
+                        for="bt-register" 
+                        type="password" 
+                        id="password" 
+                        name="password1" 
+                        class="w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md 
+                        focus:outline-none focus:ring focus:ring-gray-300 bg-gray-200" 
+                        required
+                    >
+                </div>
+                <div style=" margin-bottom: 0.5rem;">
+                    <label for="password" class="text-xl font-medium text-gray-700">Repetir Contraseña</label>
+                    <input for="bt-register" type="password" id="password" name="password2" 
+                    class="w-full px-3 py-2 mt-1 text-sm border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-gray-300 bg-gray-200"
+                    required                    
+                    >
+                </div>
+                <div style="margin: 0;">
+                    {% if mensaje %}
+                        {% block error %}{% endblock %}
+                    {% endif %}
+                </div>
+                <button id="bt-register" type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition duration-300">Registrarse</button>
+            </form>
+            <form method="GET" action="/login">
+                <div class="flex">
+                    <p class="text-lg text-center mt-4">¿Ya tienes una cuenta? &nbsp; </p>
+                    <input type="submit" class="text-lg mt-4 text-blue-500 hover:underline" value="Login"/>
+                </div>
+            </form>
+        </div>
+    </div>   
+{% endblock %}

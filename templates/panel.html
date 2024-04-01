@@ -1,0 +1,341 @@
+{% load static %}
+<!doctype html>
+<html lang="es" class='vh-100'>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>OnlyHub</title>
+        {% block meta %}{% endblock %}
+       
+        <link rel="icon" type="image/png" href="{% static './img/logo2.png' %}">
+        <link rel="stylesheet" href="{% static './stiles/normalize.css'%}">
+        <link rel="stylesheet" href="{% static './stiles/bootstrap.min.css'%}">
+        <link rel="stylesheet" href="{% static './stiles/index.css'%}">
+        <link rel="stylesheet" href="{% static './stiles/styles.css'%}">
+        <style>
+            .dislike:hover,
+            .like:hover{
+                fill:hwb(57 10% 2%);
+            }
+            .aceptar:hover{
+                fill:lime;
+            }
+            .cancelar:hover,
+            .eliminar-miembro:hover{
+                fill:red;
+            }
+        </style>
+        
+        <!--script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>-->
+    </head>
+
+    <body class="vh-100 px-3 d-flex flex-column fondo align-items-center">
+        <!--Contenedor de la barra de navegacion-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <!-- Barra de navegación -->
+                    <nav class="navbar navbar-expand-lg navbar-dark rounded-3 ">
+                        <div class="container-fluid d-flex justify-content-center gap-2  ">
+                            <!-- Nombre de la página -->
+                            <div class='d-flex justify-content-center align-items-center gap-3 '>
+                                <div class="imagen-logo">
+                                    <img src="{% static '/img/logo.png' %}" class="rounded-circle" alt="Foto de logo">
+                                </div>
+                                <form action="" method="GET" id="form-logo">
+                                    <p class='fs-2 fw-light texto-marca' id="site-logo">
+                                        OnlyHub
+                                    </p>
+                                </form>
+                            </div>
+
+                            <div class='text-white w-100 d-flex gap-5 justify-content-center align-items-center px-5 '>
+                                <div class='d-flex gap-2 align-items-center justify-content-center w-25 '>
+                                    <span class='d-flex justify-content-center align-items-center gap-2 '>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="bi bi-star-fill icono" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+
+                                        </svg>
+                                        <p class='verdana fw-bolder '>Likes :</p>
+                                    </span>
+                                    <p>{{nav_top.cant_likes}}</p>
+                                </div>
+                                <div class='d-flex gap-2 align-items-center justify-content-center w-25 '>
+                                    <span class='d-flex justify-content-center align-items-center gap-2 '>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill='white' class="bi bi-file-post" viewBox="0 0 16 16">
+                                            <path d="M4 3.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
+                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"/>
+                                          </svg>
+                                        <p class='verdana fw-bolder '>Posts :</p>
+                                    </span>
+                                    <p>{{nav_top.cant_post}}</p>
+                                </div>
+                                <div class='d-flex gap-2 align-items-center justify-content-center w-50 '>
+                                    <span class='d-flex justify-content-center align-items-center gap-2 w-50'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="red" class="bi bi-activity" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+                                        </svg>
+                                        <p class='verdana fw-bolder'>Popularidad: </p>
+                                    </span>
+                                    {% if nav_top.popularidad < 25 %}{{nav_top.popularidad}}%{% endif %}
+                                    <div class="progress w-50" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar text-bg-primary" style="width: {{nav_top.popularidad}}%">{% if nav_top.popularidad >= 25 %}{{nav_top.popularidad}}%{% endif %}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botón para cerrar sesión -->
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </button>
+                           
+                            <!-- Contenido de la barra de navegación -->
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav ms-auto">
+                                    <!-- Nombre y foto del usuario -->
+                                    <li class="nav-item dropdown">
+                                        <div class='d-flex align-items-center justify-content-center gap-3 '>
+                                            <a class="nav-link dropdown-toggle d-flex align-items-center justify-content-center " href="" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <div class="imagen-perfil text-center ">
+                                                    {% if url_foto_perfil %}
+                                                        <img src="{{ url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">    
+                                                    {% else %}
+                                                        <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                                                    {% endif %}
+                                                    <p class='text-white fw-bold verdana'>{{usuario.username}}</p>
+                                                </div>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                                <li>
+                                                    <form action="" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" value="solicitud-perfil-propio" name="opc"/>
+                                                        <input type="submit" value="Perfil" class="dropdown-item" >
+                                                    </form>
+                                                </li>
+                                                <li>
+                                                    <form action="" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" value="configuracion" name="opc"/>
+                                                        <input type="submit" value="Configuracion" class="dropdown-item" >
+                                                    </form>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form action="" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" value="cerrar-sesion" name="opc"/>
+                                                        <input type="submit" value="Cerrar Sesion" class="dropdown-item" >
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!--Fin Contenedor de la barra de navegacion-->
+        
+        <!--Cotenedor de el sidebar y de los chats-->
+        <div class='h-100 d-flex  w-100 justify-content-center '>
+            <div class='sidebar contactos p-2 h-100 rounded-1  '>
+                <div class='d-flex gap-2 justify-content-center h-100'>
+                    <div class="row d-flex justify-content-center h-100">
+                        <div class='d-flex justify-content-center p-2 editor_gap'>
+                            <a class='btn text-white c {% block contactos %} btn-success {% endblock  %} d-flex justify-content-center gap-2 verdana' id='ver_contactos'>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
+                                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                                        </svg>
+                                </span>
+                                Contactos</a>
+                            <a class='btn text-white {% block grupos %} btn-outline-primary {% endblock  %} d-flex g justify-content-center gap-1 verdana' id='ver_grupos'>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width='25' height='25'>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                                    </svg>
+                                        
+                                </span>
+                                Grupos</a>
+                        </div>
+                        
+                        <!--Contenedor de contactos-->
+                        <div class='contenedor_contactos h-100 flex-column gap-3'>
+                            <form class='d-flex justify-content-center w-100 gap-3 align-items-center mt-2' id='buscar' action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="opc" value="buscar">
+                                <input class='text-center verdana w-100 p-1 text-white rounded-2 buscar' name="input-busqueda" value="{{elemento_busqueda}}" placeholder='buscar'>                                    
+                                <button type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id='enviar'>
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                </button>
+                            </form>
+                            <div id="contenedor_modal_contacto" class="h-100 {% if Mostrar_Grupos %}d-none{% endif %}">
+                                <form action="" method="POST" class='d-flex flex-column gap-2 overflow-x-hidden overflow-y-auto h-75 py-3' id="listacontacto-form-post" >
+                                    {% csrf_token %}
+                                    <input type="hidden" name="listacontacto-username-post" id="listacontacto-username-post" value=""><!--Que usuario se solicito-->
+                                    <input type="hidden" name="opc" value="solicitud-perfil-usuario"><!--Que se va a hacer-->
+                                    {% if contactos %}
+                                        {% for cc in contactos%}
+                                            <button class='boton_usuario px-3 text-start contacto form-control d-flex justify-content-between rounded-1 align-items-center text-capitalize fs-5 verdana activo' id="{{cc.username}}">
+                                                <div class="contacto-container d-flex align-items-center justify-content-between gap-4">
+                                                    <div class="imagen-contacto">
+                                                        {% if cc.url_foto_perfil %}
+                                                            <img src="{{cc.url_foto_perfil}}" class="rounded-circle" alt="Foto de perfil">    
+                                                        {% else %}
+                                                            <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                                                        {% endif %}
+                                                        
+                                                    </div>
+                                                    <p class="nombre-contacto">{{cc.username}}</p>
+                                                </div>
+                                                {% if cc.online %}
+                                                    <div class='bg-success p-2 rounded-5 '>
+                                                    </div>
+                                                {% else %}
+                                                    <div class='bg-danger p-2 rounded-5 '>
+                                                    </div>
+                                                {% endif %}    
+                                            </button>  
+                                        {% endfor %}
+                                    {% else %}
+                                        <h4 class="h4 text-white text-center mt-8">No tiene contactos Registrados</h4>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            <div id="contenedor_modal_grupo" class="h-100 {% if Mostrar_Contactos %}d-none{% endif %}">
+                                <button class="btn btn-outline-primary rounded-5 text-white w-100" data-bs-toggle="modal" data-bs-target="#panel_crear_grupo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width='25' height='25'
+                                        class="d-inline">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                                    </svg>
+                                    Nuevo Grupo
+                                </button>
+                                <div class="modal fade" id="panel_crear_grupo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content modal-info-contacto">
+                                            <div class="modal-header d-flex gap-4">
+                                                <div  class='d-flex flex-column align-items-center '>
+                                                    <p class='text-white fw-bold fs-3 verdana text-center'>Nuevo Grupo</p>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body text-white ">
+                                                <form action="" method="POST" enctype="multipart/form-data" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="opc" value="nuevo-grupo">
+                                                    <div class="mb-3">
+                                                        <label class='d-block fs-5 verdana'>Nombre del Grupo</label>
+                                                        <input type='text' value="{{Nombre_Grupo}}" name="nombre_grupo" class='form-control d-inline w-100' required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class='d-block fs-5 verdana'>Info</label>
+                                                        <input type='text' value="{{Info}}" name="input-info" class='form-control d-inline w-100'required>
+                                                    </div>
+
+                                                    <div class="mb-3 mt-3">
+                                                        <label for="formFile" class="form-label fs-5">Suba una foto de Perfil de Grupo</label>
+                                                        <input type="file" class="form-control bg-dark text-white" name="imagen" accept="image/*" id="formFile">
+                                                    </div>
+                                                    
+                                                    <div class="modal-footer mt-4">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary" id="btn_nuevo_grupo">Crear</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form action="" method="POST" class='d-flex flex-column gap-2 overflow-x-hidden overflow-y-auto h-75 py-3' id="listagrupos-form-post" >
+                                    {% csrf_token %}
+                                    <input type="hidden" name="listagrupos-id-post" id="listagrupos-id-post">
+                                    <input type="hidden" name="opc" value="solicitud-grupo-id">
+                                
+                                    {% if grupos %}
+                                        {% for cc in grupos %}
+                                            <button class='boton_grupo px-3 text-start contacto form-control d-flex justify-content-between rounded-1 align-items-center text-capitalize fs-5 verdana activo' id="{{cc.Grupo.id}}">
+                                                <div class="contacto-container d-flex align-items-center justify-content-between gap-4">
+                                                    <div class="imagen-contacto">
+                                                        {% if cc.Grupo.url_imagen %}
+                                                            <img src="{{cc.Grupo.url_imagen}}" class="rounded-circle" alt="Foto de perfil">    
+                                                        {% else %}
+                                                            <img src="{% static '/img/grupo.png' %}" class="rounded-circle" alt="Foto de perfil">
+                                                        {% endif %}
+                                                    </div>
+                                                    <p class="nombre-contacto">{{cc.Grupo.Nombre_Grupo}}</p>
+                                                </div>
+                                                {% if cc.Admin %}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5M8.16 4.1a.178.178 0 0 0-.32 0l-.634 1.285a.18.18 0 0 1-.134.098l-1.42.206a.178.178 0 0 0-.098.303L6.58 6.993c.042.041.061.1.051.158L6.39 8.565a.178.178 0 0 0 .258.187l1.27-.668a.18.18 0 0 1 .165 0l1.27.668a.178.178 0 0 0 .257-.187L9.368 7.15a.18.18 0 0 1 .05-.158l1.028-1.001a.178.178 0 0 0-.098-.303l-1.42-.206a.18.18 0 0 1-.134-.098z"/>
+                                                    </svg>
+                                                {% endif %}    
+                                            </button>  
+                                        {% endfor %}
+                                    {% else %}
+                                        <h4 class="h4 text-white text-center mt-8">No estas agregado a ningun grupo</h4>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                        <!--Find del Contenedor de contactos-->
+                    </div>
+                </div>
+            </div>
+            
+            {% block contenido %}
+            {% endblock %}
+
+        </div>
+        <!--Fin del Cotenedor de el sidebar y de los chats-->
+
+        <script>
+            botones_usuario = document.querySelectorAll(".boton_usuario");
+            botones_usuario.forEach(element => {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    id=element.id
+                    console.log(id)
+                    hiden=document.getElementById("listacontacto-username-post")
+                    hiden.value=id
+                    form=document.getElementById("listacontacto-form-post")
+                    form.submit()
+                });
+            });
+            
+            botones_usuario = document.querySelectorAll(".boton_grupo");
+            botones_usuario.forEach(element => {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    id=element.id
+                    hiden=document.getElementById("listagrupos-id-post")
+                    hiden.value=id
+                    form=document.getElementById("listagrupos-form-post")
+                    form.submit()
+                });
+            });
+
+            sitio_logo=document.getElementById("site-logo")
+            sitio_logo.addEventListener('click',(e)=>{
+                e.preventDefault()
+                form=document.getElementById("form-logo")
+                form.submit()
+            })
+            
+            {% if Alerta %}
+                alert("{{Alerta}}")
+            {% endif %}
+        </script>
+        <script src="{% static 'javascript/popper.min.js' %}"></script>
+        <script src="{% static 'javascript/bootstrap.bundle.min.js'%}"></script>
+        <script src="{% static 'javascript/index.js'%}"></script>
+    </body>
+</html>

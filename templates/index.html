@@ -1,0 +1,20 @@
+{% load static %}
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{% static './img/logo2.png' %}">
+    <link href="{% static './stiles/index.css' %}" rel="stylesheet" type="text/css">
+
+    <!--script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>-->
+  </head>
+  
+  <body class="bg-gray-800 flex items-center justify-center h-screen">
+    {% block contenido %}
+    {% endblock %}
+  </body>
+</html>
