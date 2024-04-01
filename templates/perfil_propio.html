@@ -1,0 +1,219 @@
+{% extends "panel.html" %}
+{% load static %}
+{% block contenido %}
+    <div class="contenedor_principal rounded-2 ">
+             <!--Primer contenedor del general -->
+             <div class='p-2 d-flex justify-content-between rounded-1 info'>
+                <div class='d-flex gap-3 align-items-center'>
+                    <div class="imagen-contacto">
+                        {% if url_foto_perfil %}
+                            <img src="{{ url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">    
+                        {% else %}
+                            <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                        {% endif %}
+                    </div>
+                    <p class='fs-5 text-white nombre-contacto'>{{usuario.username}}</p>
+                </div>
+    
+                <div class='d-flex justify-content-between align-items-center gap-3'>
+                    <a class="btn btn-primary outline_info rounded-5" data-bs-toggle="modal" data-bs-target="#usuarioInfo" id='info'>
+                        Info
+                    </a>
+                      
+                    <!-- Modal de info -->
+                    <div class="modal fade" id="usuarioInfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered">
+                            <div class="modal-content modal-info-contacto">
+                                <div class="modal-header d-flex gap-4">
+                                    <div class="imagen-info text-center ">
+                                        {% if url_foto_perfil %}
+                                            <img src="{{ url_foto_perfil }}" class="rounded-circle" alt="Foto de perfil">    
+                                        {% else %}
+                                            <img src="{% static '/img/usuario.png' %}" class="rounded-circle" alt="Foto de perfil">
+                                        {% endif %}
+                                    </div>
+                                    <div  class='d-flex flex-column align-items-center '>
+                                        <p class='text-white text-capitalize fw-bold fs-3 verdana'>{{usuario.username}}</p>
+                                        {% if usuario.Telefono %}<p class='fw-bold verdana numero'>{{usuario.Telefono}}</p>{% endif %}
+                                    </div>
+                                </div>
+                                <div class="modal-body text-white ">
+                                    <div class='d-flex flex-column gap-2'>
+                                        <span class='d-flex gap-2 align-items-center '>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                            </svg>
+                                            <h3 class='verdana text-capitalize fw-light '>info :{% if usuario.Info %}<span class='verdana fw-light '>{{usuario.Info}}</span>{% endif %}</h3>
+                                        </span>
+                                        
+                                        {% if usuario %}
+                                            
+                                            {% if usuario.Nombres %}<p class='verdana fw-light '>Nombre: {{usuario.Nombres}}</p>{% endif %}
+                                            {% if usuario.Apellidos %}<p class='verdana fw-light '>Apellido: {{usuario.Apellidos}}</p>{% endif %}
+                                            {% if usuario.Pais %}<p class='verdana fw-light '>Pais: {{usuario.Pais}}</p>{% endif %}
+                                            {% if usuario.Ciudad %}<p class='verdana fw-light '>Ciudad: {{usuario.Ciudad}}</p>{% endif %}
+                                            {% if usuario.Fecha_Nacimiento %}<p class='verdana fw-light '>Fecha de Nacimiento: {{usuario.Fecha_Nacimiento}}</p>{% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class='text-white justify-content-between w-100 1 align-items-center gap-3 d-flex h-100 w-75'>
+            <div class='d-flex container_public h-100 w-100 align-items-center '>
+                <div id="carouselExampleFade" class="slide carousel-fade h-100 d-flex align-items-center ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-caret-left-fill svg-overflow" viewBox="0 0 16 16" id='svg-izquierda'>
+                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                    </svg>
+                    <div class="carousel-inner h-100 d-flex align-items-center">
+                        <div class="carousel-item active d-flex  h-100 d-flex align-items-center px-4 py-4 gap-4" id='container_public'>
+                            <img src="{% static 'img/new.png' %}" class="img-fluid mx-1 fixed-img liekada" alt="imagen" id='poster' data-bs-toggle="modal" data-bs-target="#nueva_publicacion">
+                            
+                            {% for publicacion_actual in publicaciones %}
+                                <img src="{{publicacion_actual.p.url_imagen}}" class="img-fluid mx-1 fixed-img liekada" alt="imagen" id='poster' data-bs-toggle="modal" data-bs-target="#{{publicacion_actual.p.token}}">
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <!--MODAL PARA NUEVA PUBLICACION -->      
+                            <div class="modal fade" id="nueva_publicacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content modal-info-contacto">
+                                        <div class="modal-header justify-center">
+                                            <h1 class="modal-title fs-5 text-center h1" id="staticBackdropLabel">Nueva Publicación</h1>
+                                        </div>
+                                        <div class="modal-body text-white">
+                                            <form action="" method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="opc" value="post-new-publicacion">
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label fs-5">Postee una imagen</label>
+                                                    <input type="file" class="form-control bg-dark text-white" name="imagen" accept="image/*" id="formFile" required>
+                                                </div>
+                                                <label for="textoArea" class="mt-4 h4 ">Descripcion</label>
+                                                <textarea style="margin-top:10px; height: 200px; max-height: 200px;min-height: 200px;" class="form-control" id="textoArea" rows="3" placeholder="Inserte aqui la descripcion" name="descripcion"></textarea>
+                                                <div class="modal-footer mt-4">
+                                                    <button type="submit" class="btn btn-primary">Publicar</button>
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                                </div>        
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% for publicacion_actual in publicaciones %}
+                                <div class="modal fade" id="{{publicacion_actual.p.token}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content modal-info-contacto">
+                                            {% if publicacion_actual.p.texto %}
+                                                <div class="modal-header">
+                                                    <span class='d-flex gap-2 align-items-center '>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                                        </svg>
+                                                        <h3 class='verdana text-capitalize fw-light h4 '><span class='verdana fw-light h5'>{{publicacion_actual.p.texto}}</span></h3>
+                                                    </span>                                                    
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                            {% endif %}
+                                            <div class="modal-body">
+                                                <img src="{{publicacion_actual.p.url_imagen}}" class="mx-1">                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                                
+
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                                                <form action="" method="POST" id="###{{publicacion_actual.p.token}}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="opc" value="eliminar-publicacion-personal">
+                                                    <input type="hidden" name="token" value="{{publicacion_actual.p.token}}">
+                                                </form>
+                                                <button type="button" class="btn btn-danger rounded-5 btn-eliminar-publicacion" id="##{{publicacion_actual.p.token}}">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-caret-right-fill svg-overflow" viewBox="0 0 16 16" id='svg-derecha'>
+                        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contenedor = document.getElementById("container_public");
+            const svgIzquierda = document.getElementById("svg-izquierda");
+            const svgDerecha = document.getElementById("svg-derecha");
+            const scrollStep = contenedor.clientWidth; // Desplazamiento equivalente al ancho de una imagen
+          
+            if (contenedor.scrollWidth > contenedor.clientWidth) {
+              svgDerecha.classList.remove("d-none");
+              svgIzquierda.classList.remove("d-none");
+            } else {
+              svgDerecha.classList.add("d-none");
+              svgIzquierda.classList.add("d-none");
+            }
+          
+            svgIzquierda.addEventListener("click", function () {
+              const newScrollLeft = Math.max(0, contenedor.scrollLeft - scrollStep);
+              animarScroll(contenedor.scrollLeft, newScrollLeft);
+            });
+          
+            svgDerecha.addEventListener("click", function () {
+              const newScrollLeft = Math.min(
+                contenedor.scrollLeft + scrollStep,
+                contenedor.scrollWidth - contenedor.clientWidth
+              );
+              animarScroll(contenedor.scrollLeft, newScrollLeft);
+            });
+          
+            function animarScroll(start, end) {
+              const duration = 1000; // Duración de la animación en milisegundos
+              const startTime = performance.now();
+              const elementos = contenedor.querySelectorAll("#poster");
+              const intervalo = duration / elementos.length; // Intervalo entre cada imagen
+          
+              elementos.forEach((elemento, index) => {
+                setTimeout(() => {
+                  elemento.classList.add("hover-effect");
+                  setTimeout(() => {
+                    elemento.classList.remove("hover-effect");
+                  }, 300); // Después de 1 segundo, eliminar la clase de efecto de hover
+                }, index * intervalo); // Aplicar el efecto de hover en intervalos
+              });
+          
+              function step(timestamp) {
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                contenedor.scrollLeft = start + (end - start) * progress;
+          
+                if (progress < 1) {
+                  requestAnimationFrame(step);
+                }
+              }
+          
+              requestAnimationFrame(step);
+              // Agregar clase de efecto de hover a los elementos durante 1 segundo
+            }
+          });
+    </script>
+{% endblock %}
