@@ -1,0 +1,507 @@
+/*pantallas extrasmall xs*/
+@media (max-width: 576px) {
+  .sidebar {
+    width: 520px;
+  }
+  .contenedor_principal {
+    display: none;
+  }
+  .contenedor_modales {
+    display: flex;
+  }
+  .contenedor_contactos {
+    display: none;
+  }
+  .editor_gap {
+    gap: 10px;
+  }
+}
+
+/*pantallas small sm*/
+@media (min-width: 577px) {
+  .sidebar {
+    width: 530px;
+  }
+  .contenedor_modales {
+    display: flex;
+  }
+  .contenedor_mensajes {
+    max-height: 480px; /* Altura máxima del contenedor */
+    overflow-y: auto;
+  }
+  .contenedor_principal {
+    display: none;
+  }
+  .contenedor_contactos {
+    display: none;
+  }
+  .editor_gap {
+    gap: 20px;
+  }
+}
+
+/*pantallas medianas md*/
+@media (min-width: 769px) {
+  .sidebar {
+    width: 700px;
+  }
+  .contenedor_modales {
+    display: flex;
+  }
+  .contenedor_mensajes {
+    height: 520px; /* Altura máxima del contenedor */
+    overflow-y: auto;
+  }
+  .contenedor_contactos {
+    display: none;
+  }
+  .contenedor_principal {
+    display: none;
+  }
+  .editor_gap {
+    gap: 20px;
+  }
+}
+
+/*pantallas largas lg*/
+@media (min-width: 993px) {
+  .sidebar {
+    width: 300px;
+  }
+  .contenedor_modales {
+    display: none;
+  }
+  .contenedor_mensajes {
+    max-height: 472px; /* Altura máxima del contenedor */
+    overflow-y: auto;
+  }
+  .contenedor_contactos {
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor_principal {
+    display: flex;
+    flex-direction: column;
+    width: 840px;
+  }
+  .editor_gap {
+    gap: 20px;
+  }
+}
+
+/*pantallas extralargas xl*/
+@media (min-width: 1201px) {
+  .sidebar {
+    width: 300px;
+  }
+  .contenedor_modales {
+    display: none;
+  }
+  .contenedor_mensajes {
+    max-height: 480px; /* Altura máxima del contenedor */
+    overflow-y: auto;
+  }
+  
+  .contenedor_principal {
+    display: flex;
+    flex-direction: column;
+    width: 890px;
+  }
+  .contenedor_contactos {
+    display: flex;
+  }
+  .editor_gap {
+    gap: 20px;
+  }
+}
+
+/*pantallas extraextralargas xxl*/
+@media (min-width: 1401px) {
+  .sidebar {
+    width: 300px;
+  }
+  .contenedor_modales {
+    display: none;
+  }
+
+  .contenedor_mensajes {
+    max-height: 472px; /* Altura máxima del contenedor */
+    overflow-y: auto;
+  }
+  .contenedor_principal {
+    display: flex;
+    flex-direction: column;
+    width: 1100px;
+  }
+  .contenedor_contactos {
+    display: flex;
+  }
+  .editor_gap {
+    gap: 10px;
+  }
+}
+
+.carousel-item .like {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.fixed-img {
+  border-radius: 15px; /* Borde redondeado */
+  width: 250px; /* Ajusta el ancho según lo necesites */
+  height: 400px; /* Esto mantiene la proporción de la imagen */
+  position: relative; /* Posición relativa para los elementos hijos */
+  transition: transform 0.3s ease;
+}
+.liekada {
+  border: solid 5px;
+  border-color: hwb(261 1% 45% / 0.705);
+}
+
+#poster {
+  box-shadow: 0px 0px 30px hsla(0, 0%, 0%, 0.712);
+}
+.fixed-size {
+  width: 1000px; /* Ajusta el ancho según lo necesites */
+  height: 500px; /* Esto mantiene la proporción de la imagen */
+}
+
+
+
+.fixed-img:hover {
+  transform: scale(1.1);
+  border-radius: 0%;
+}
+
+.svg-overflow {
+  width: 40px;
+  height: 40px;
+  fill: currentColor;
+}
+.svg-overflow:hover {
+  cursor: pointer;
+}
+
+.hover-effect {
+  transform: scale(1.1); /* Aumenta el tamaño del elemento en 10% */
+  transition: transform 0.4s ease; /* Aplica una transición suave */
+}
+
+#container_public {
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  overflow-y: hidden;
+  white-space: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+}
+
+.verdana {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.imagen_modal_poster {
+  border-radius: 40px;
+  max-height: 800px;
+}
+
+.oculto {
+  display: none;
+}
+
+.outline_chat,
+.outline_pub {
+  background-color: transparent;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: solid 2px;
+}
+.outline_chat {
+  background-color: #7338d2;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.outline_chat:hover {
+  transform: scale(1.2);
+}
+.fondo {
+  background-color: #1f2937;
+}
+
+
+.outline_info {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.outline_info:hover {
+  transform: scale(1.2);
+}
+.modal-info-contacto {
+  background-color: #1f2836f6;
+  width: 400px;
+}
+.numero {
+  color: #8484849e;
+}
+.sidebar {
+  box-shadow: 0px 0px 50px hsla(0, 0%, 0%, 0.932);
+  background-color: hsla(0, 0%, 36%, 0.651);
+}
+.fondo-chat {
+  background-color: #81818163;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.fondo-enviar {
+  background-color: #5f5d5dad;
+}
+.info {
+  box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
+  background-color: hsla(0, 0%, 36%, 0.371);
+  border-bottom: solid 1px;
+  border-color: hsla(0, 1%, 66%, 0.267);
+}
+
+.contacto {
+  color: white;
+  background-color: transparent;
+  transition: background-color 0.5s ease;
+  border-color: hsla(0, 0%, 46%, 0);
+}
+
+.contacto:hover {
+  color: black;
+  background-color: hsl(0, 0%, 86%);
+}
+.activo {
+  background-color: hsl(0, 0%, 86%);
+  color: black;
+}
+
+.contacto_activo {
+  background-color: hsl(0, 0%, 86%);
+}
+
+#enviar {
+  width: 20px;
+  height: 20px;
+  fill: hsla(0, 0%, 61%, 0.597);
+}
+#enviar:hover {
+  cursor: pointer;
+}
+
+.svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  transition: fill 0.3s ease;
+}
+.svg:hover {
+  cursor: pointer;
+  fill: #7338d2;
+}
+.icono {
+  fill: hwb(57 10% 2%);
+}
+.marca {
+  background-color: hsl(316, 93%, 22%);
+}
+.texto-marca {
+  color: #7338d2;
+  transition: color 0.3s ease;
+}
+.texto-marca:hover {
+  color: white;
+  cursor: none;
+}
+
+/* Elementos del chat*/
+.chat-cont-recibido {
+  color: white;
+  max-width: 35%;
+  background-color: #7338d2; /* Color de fondo de la burbuja de chat */
+  border-radius: 20px; /* Borde redondeado */
+  padding: 12px; /* Espaciado interno */
+  word-wrap: break-word; /* Envolver palabras */
+  margin-bottom: 15px; /* Espaciado inferior entre burbujas de chat */
+  position: relative; /* Posición relativa para el seudoelemento */
+  margin-left: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+.chat-cont-enviado {
+  color: white;
+  max-width: 35%;
+  background-color: hwb(310 75% 22%); /* Color de fondo de la burbuja de chat */
+  border-radius: 20px; /* Borde redondeado */
+  padding: 12px; /* Espaciado interno */
+  word-wrap: break-word; /* Envolver palabras */
+  margin-bottom: 15px; /* Espaciado inferior entre burbujas de chat */
+  position: relative; /* Posición relativa para el seudoelemento */
+  margin-left: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+.chat-cont-recibido,
+.chat-cont-enviado {
+  margin: 0;
+}
+.chat-cont-recibido::before {
+  content: ""; /* Contenido del pseudo-elemento */
+  position: absolute; /* Posición absoluta */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 14px 10px 0;
+  border-color: transparent #7338d2 transparent transparent;
+  right: 99%; /* Colocar a la izquierda de la burbuja de chat */
+  top: 50%; /* Centrar verticalmente */
+  transform: translateY(-50%);
+}
+.chat-cont-enviado::after {
+  content: ""; /* Contenido del pseudo-elemento */
+  position: absolute; /* Posición absoluta */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 15px; /* Ajusta el ancho y la altura de la punta */
+  border-color: transparent transparent transparent hwb(310 75% 22%); /* Ajusta el color de la punta */
+  left: 99%; /* Coloca a la derecha de la burbuja de chat */
+  top: 50%; /* Centra verticalmente */
+  transform: translateY(-50%); /* Centra verticalmente */
+}
+
+#container_public {
+  overflow-x: auto; /* Cambiar a scroll en lugar de auto */
+}
+
+#container_public::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento */
+  background-color: transparent; /* Color de fondo de la barra de desplazamiento */
+  height: 10px; /* Altura de la barra de desplazamiento */
+}
+
+#container_public::-webkit-scrollbar-thumb {
+  background-color: hsl(
+    0,
+    0%,
+    54%
+  ); /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 40px; /* Radio de borde del pulgar de la barra de desplazamiento */
+}
+.container_public {
+  background-color: transparent;
+}
+#container_public::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(315, 13%, 88%);
+  cursor: pointer;
+}
+
+.buscar {
+  background-color: hsla(0, 0%, 61%, 0.597);
+  outline: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.contacto-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.imagen-info {
+  flex-shrink: 0;
+}
+.imagen-info img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* Evita que la imagen se distorsione, recortando si es necesario */
+}
+.imagen-contacto {
+  flex-shrink: 0; /* Evita que la imagen se ajuste automáticamente */
+}
+.imagen-perfil {
+  flex-shrink: 0; /* Evita que la imagen se ajuste automáticamente */
+}
+.imagen-perfil img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover; /* Evita que la imagen se distorsione, recortando si es necesario */
+}
+.imagen-contacto img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover; /* Evita que la imagen se distorsione, recortando si es necesario */
+}
+
+.imagen-configuracion {
+  flex-shrink: 0; /* Evita que la imagen se ajuste automáticamente */
+}
+.imagen-configuracion img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover; /* Evita que la imagen se distorsione, recortando si es necesario */
+}
+.imagen-logo {
+  flex-shrink: 0; /* Evita que la imagen se ajuste automáticamente */
+}
+.imagen-logo img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover; /* Evita que la imagen se distorsione, recortando si es necesario */
+}
+.contenedor_principal {
+  background-color: hsla(0, 0%, 0%, 0.282);
+}
+
+.contenedor_mensajes::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento */
+  background-color: transparent; /* Color de fondo de la barra de desplazamiento */
+  height: 10px; /* Altura de la barra de desplazamiento */
+}
+
+.contenedor_mensajes::-webkit-scrollbar-thumb {
+  background-color: hsl(
+    0,
+    0%,
+    54%
+  ); /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 40px; /* Radio de borde del pulgar de la barra de desplazamiento */
+}
+.contenedor_mensajes::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(315, 13%, 88%);
+  cursor: pointer;
+}
+.buscar::placeholder {
+  color: #999; /* Color del placeholder */
+  font-style: italic; /* Estilo de fuente para el placeholder */
+}
+
+
+
+
+/*Estilos de Elias para el formulario de nueva publicacion*/
+.form-group {
+    margin-bottom: 15px;
+}
+.form-control {
+    border-radius: 20px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.custom-file-input ~ .custom-file-label::after {
+    content: "Elegir";
+}
+.custom-file {
+    margin-bottom: 20px;
+}
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+    content: "Buscar";
+}
+.custom-file-input:focus ~ .custom-file-label {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.btn {
+    border-radius: 20px;
+}
